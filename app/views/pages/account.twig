@@ -1,0 +1,12 @@
+{% extends "layout.twig" %}
+
+ {% block content %}
+     <h1>Mon compte</h1>
+
+     <p>Mes Ephatiens</p>
+     {% for personne in personnes %}
+         <li style="font-size: 20px;">
+             <a href="{{ path_for('formInscription', {'id':personne.getId()}) }}">{{ personne.getPrenom() }} {{ personne.getNom() }}</a>
+         </li>
+     {% endfor %}
+ {% endblock %}

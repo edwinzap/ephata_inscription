@@ -1,0 +1,99 @@
+
+{% extends "layout.twig" %}
+
+ {% block content %}
+    <script type="text/javascript" src="javascript.js"></script>
+
+     <div class="panel panel-default">
+         <!--<h1>{{ evenementLibelle }} {{ evenementDate}}</h1>-->
+
+         <h2 class="panel-heading text-center">Inscription de {{ personne.getNom() }}</h2>
+         <form method="post" action="{{path_for('formInscription', {'id':personne.getId()})}}" class="panel-body  text-info">
+             <!-- Transport -->
+             <div class="form-group required">
+                 <label class="control-label required">Moyen de transport</label>
+                 <div class="radio" onchange="hideDiv()">
+                     <label><input type="radio" name="transport" value="train" onchange="revealIfChecked(this)">Train</label>
+                 </div>
+                 <div class="radio">
+                     <label><input type="radio" name="transport" value="voiture" onchange="revealIfChecked(this)">Voiture</label>
+                 </div>
+                 <div class="radio">
+                     <label><input type="radio" name="transport" value="autre" onchange="revealIfChecked(this)">Par mes propres moyens</label>
+                 </div>
+             </div>
+
+             <!-- Train -->
+             <div  class="reveal-if-checked bg-info" id="divTrain">
+             <fieldset class="fieldset">
+                 <legend>Train</legend>
+                 <!-- Gare de départ -->
+                 <div class="form-group">
+                     <label for="gare" class="control-label">Gare de départ</label>
+                     <input type="text" placeholder="gare de départ" name="gare" class="form-control "/>
+                 </div>
+
+                 <!-- Heure d'arrivée -->
+                 <div class="form-group required">
+                     <label class="control-label required">Heure d'arrivée</label>
+                     {% for arrivee in arrivees %}
+                         <div class="radio">
+                             <label><input type="radio" name="arrivee" value="{{ arrivee.id }}" required="">{{ arrivee.heure }}</label>
+                         </div>
+                     {% endfor %}
+             </div>
+             </fieldset>
+             </div>
+
+             <!-- Voiture -->
+             <div  class="reveal-if-checked bg-info" id="divVoiture">
+             <fieldset class="fieldset">
+                 <legend>Voiture</legend>
+                 <!-- Ville de départ -->
+                 <div class="form-group">
+                     <label for="ville" class="control-label">Ville de départ</label>
+                     <input type="text" placeholder="ville de départ" name="ville" class="form-control "/>
+                 </div>
+                 <!-- Places libres -->
+                 <div class="form-group required">
+                     <label for="place" class="control-label">Places libres</label>
+                     <select name="place" class="form-control">
+                         <option value="0" selected>0</option>
+                         <option value="1">1</option>
+                         <option value="2">2</option>
+                         <option value="3">3</option>
+                         <option value="4">4</option>
+                         <option value="5">5</option>
+                         <option value="6">6</option>
+                         <option value="7">7</option>
+                         <option value="8">8</option>
+                     </select>
+                 </div>
+             </fieldset>
+             </div>
+
+
+             <!-- Paiement -->
+             <div class="form-group required">
+                 <label class="control-label required">Paiement</label>
+                 <div class="radio">
+                     <label><input type="radio" name="paiement" value="virement">Virement</label>
+                 </div>
+                 <div class="radio">
+                     <label><input type="radio" name="paiement" value="sur place">Sur place</label>
+                 </div>
+             </div>
+
+             <!-- Commentaires -->
+             <div class="form-group">
+                 <label for="commentaire" class="control-label">Commentaires</label>
+                 <textarea rows="5" placeholder="remarques, questions, commentaires..." name="commentaire" class="form-control"></textarea>
+             </div>
+             <div class="btn-toolbar pull-right">
+                 <a class="btn btn-primary" href="{{ path_for('account') }}">Annuler</a>
+                 <input type="submit" class="btn btn-primary" name="personne" value="Terminé"/>
+             </div>
+         </form>
+     </div>
+
+{% endblock %}

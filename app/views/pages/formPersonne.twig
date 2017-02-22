@@ -1,0 +1,139 @@
+{% extends "layout.twig" %}
+
+ {% block content %}
+
+<div class="panel panel-default">
+
+    <h2 class="panel-heading text-center">{{ title }}</h2>
+
+    <form method="post" action="{{path_for('formPersonne')}}" class="panel-body  text-info">
+
+        <!-- Nom -->
+        <div class="form-group required">
+            <label for="nom" class="control-label">Nom</label>
+            <input type="text" placeholder="nom de famille" name="nom" class="form-control" required />
+        </div>
+
+        <!-- Prénom -->
+        <div class="form-group required">
+            <label for="prenom" class="control-label">Prénom</label>
+            <input type="text" placeholder="prénom" name="prenom" class="form-control " required/>
+        </div>
+
+        <!-- Sexe -->
+
+        <div class="form-group required">
+            <label class="control-label required">Sexe</label>
+            <div class="radio">
+                <label><input type="radio" name="sexe" value="0">Masculin</label>
+            </div>
+            <div class="radio">
+                <label><input type="radio" name="sexe" value="1">Féminin</label>
+            </div>
+        </div>
+
+        <!-- Date de naissance -->
+        <div class="form-group required">
+            <label for="naissance" class="control-label">Date de naissance</label>
+            <div class="input-group date">
+                <input type="text" class="form-control" name="naissance" placeholder="jj/mm/aaaa">
+                <div class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </div>
+            </div>
+        </div>
+        <!-- Ajouter l'API DatePicker qui se trouve dans Vendor/miguel/DatePicker -->
+
+
+        <!-- Téléphone -->
+        <div class="form-group required">
+            <label for="telephone" class="control-label">Téléphone</label>
+            <div class="input-group">
+                <input type="text" placeholder="numéro de téléphone" name="telephone1" class="form-control" required />
+                <div class="input-group-addon">
+                    <span class="glyphicon glyphicon-earphone"></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Autre téléphone -->
+        <div class="form-group">
+            <label for="telephone2" class="control-label">Autre téléphone</label>
+            <div class="input-group">
+                <input type="text" placeholder="numéro de téléphone" name="telephone2" class="form-control"/>
+                <div class="input-group-addon">
+                    <span class="glyphicon glyphicon-earphone"></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Allergies -->
+        <div class="form-group">
+            <label for="allergie" class="control-label">Allergies</label>
+            <textarea rows="4" placeholder="allergies, intolérances,..." name="allergie" class="form-control"></textarea>
+        </div>
+        <br>
+
+
+        <!-- Adresse -->
+        <fieldset class="fieldset">
+            <legend>Adresse</legend>
+            <div class="row">
+                <!-- rue -->
+                <div class="col-sm-6 form-group required">
+                    <label for="rue" class="control-label">Rue</label>
+                    <input type="text" placeholder="rue" name="rue"  class="form-control" required/>
+                </div>
+
+                <!-- numero -->
+                <div class="col-sm-3 form-group required">
+                    <label for="numero" class="control-label">Numéro</label>
+                    <input type="number" placeholder="numéro" name="numero" class="form-control" required/>
+                </div>
+
+                <!-- boite -->
+                <div class="col-sm-3 form-group">
+                    <label for="boite" class="control-label">Boite</label>
+                    <input type="text" placeholder="boite" name="boite" class="form-control"/>
+                </div>
+            </div>
+
+            <div class="row">
+                <!-- code postal -->
+                <div class="col-sm-6 form-group required">
+                    <label for="codePostal" class="control-label">Code Postal</label>
+                    <input type="text" placeholder="code postal" name="codePostal" class="form-control" required/>
+                </div>
+
+                <!-- ville -->
+                <div class="col-sm-6 form-group required">
+                    <label for="ville" class="control-label">Ville</label>
+                    <input type="text" placeholder="ville ou village" name="ville" class="form-control" required/>
+                </div>
+
+                <!-- pays -->
+                <div class="col-sm-6 form-group">
+                    <label for="pays" class="control-label">Pays</label>
+                    <select name="pays" class="form-control">
+                        <option value="DE">Allemagne</option>
+                        <option value="BE" selected>Belgique</option>
+                        <option value="ES">Espagne</option>
+                        <option value="US">Etats-Unis</option>
+                        <option value="FR">France</option>
+                        <option value="IT">Italie</option>
+                        <option value="LU">Luxembourg</option>
+                        <option value="NL">Pays-Bas</option>
+                        <option value="PL">Pologne</option>
+                        <option value="PT">Portugal</option>
+                        <option value="CH">Suisse</option>
+                        <option value="other">Autre...</option>
+                    </select>
+                </div>
+            </div>
+        </fieldset>
+        <div class="btn-toolbar pull-right">
+            <a class="btn btn-primary" href="{{ path_for('account') }}">Annuler</a>
+            <input type="submit" class="btn btn-primary" name="personne" value="Suivant"/>
+        </div>
+    </form>
+    {% endblock %}
