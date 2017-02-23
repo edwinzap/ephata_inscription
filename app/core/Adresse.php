@@ -29,7 +29,7 @@ class Adresse
      * @param $Ville
      * @param $Pays
      */
-    public function __construct($Rue, $Numero, $Boite, $CodePostal, $Ville, $Pays)
+    public function __construct($Rue=null, $Numero=null, $Boite=null, $CodePostal=null, $Ville=null, $Pays=null)
     {
         $this->Rue = $Rue;
         $this->Numero = $Numero;

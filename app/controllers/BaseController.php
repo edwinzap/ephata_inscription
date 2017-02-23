@@ -8,12 +8,13 @@
 
 namespace App\Controllers;
 
-use App\Models\BaseModel;
-use App\Models\UtilisateurModel;
+use App\Core\Adresse;
+use App\Core\Evenement;
+use App\Core\Personne;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
-class BaseController
+abstract class BaseController
 {
     private $container;
 
@@ -45,6 +46,22 @@ class BaseController
 
     protected function adresse(){
         return $this->container->adresse;
+    }
+
+    protected function evenement(){
+        return $this->container->evenement;
+    }
+
+    protected function inscription(){
+        return $this->container->inscription;
+    }
+
+    protected function section(){
+        return $this->container->section;
+    }
+
+    protected function arrivee(){
+        return $this->container->section;
     }
 
 }

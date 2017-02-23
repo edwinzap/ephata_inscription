@@ -2,11 +2,12 @@
  * Created by forge on 21/02/2017.
  */
 function revealIfChecked(item){
+
     var train = document.getElementById("divTrain");
     var voiture = document.getElementById("divVoiture");
-    var radio = document.getElementsByName("arrivee");
+    var radio = document.getElementsByName("arriveeGare");
 
-    switch (item.value){
+    switch (item.id){
         case "train":
             train.style.display = "inherit";
             voiture.style.display = "none";
@@ -20,6 +21,7 @@ function revealIfChecked(item){
         case "autre":
             train.style.display ="none";
             voiture.style.display = "none";
+
             desactivateRequired(radio);
             break;
         default:

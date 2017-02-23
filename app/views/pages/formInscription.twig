@@ -5,21 +5,23 @@
     <script type="text/javascript" src="javascript.js"></script>
 
      <div class="panel panel-default">
-         <!--<h1>{{ evenementLibelle }} {{ evenementDate}}</h1>-->
+         <p>{{ evenement.getLibelle() }} {{ evenement.getDate}}</p>
 
-         <h2 class="panel-heading text-center">Inscription de {{ personne.getNom() }}</h2>
+         <h2 class="panel-heading text-center">Inscription de {{ personne.getPrenom()  }} {{ personne.getNom() }}</h2>
          <form method="post" action="{{path_for('formInscription', {'id':personne.getId()})}}" class="panel-body  text-info">
+             <input type="hidden" name="evenement" value="{{ evenement.getId() }}"/>
+
              <!-- Transport -->
              <div class="form-group required">
                  <label class="control-label required">Moyen de transport</label>
                  <div class="radio" onchange="hideDiv()">
-                     <label><input type="radio" name="transport" value="train" onchange="revealIfChecked(this)">Train</label>
+                     <label><input type="radio" name="transport" id="train" value="{{ inscription.getConstTransportTrain() }}" onchange="revealIfChecked(this)">Train</label>
                  </div>
                  <div class="radio">
-                     <label><input type="radio" name="transport" value="voiture" onchange="revealIfChecked(this)">Voiture</label>
+                     <label><input type="radio" name="transport" id="voiture" value="{{ inscription.getConstTransportVoiture() }}" onchange="revealIfChecked(this)">Voiture</label>
                  </div>
                  <div class="radio">
-                     <label><input type="radio" name="transport" value="autre" onchange="revealIfChecked(this)">Par mes propres moyens</label>
+                     <label><input type="radio" name="transport" id="autre" value="{{ inscription.getConstTransportAutre() }}" onchange="revealIfChecked(this)">Par mes propres moyens</label>
                  </div>
              </div>
 
@@ -30,15 +32,15 @@
                  <!-- Gare de départ -->
                  <div class="form-group">
                      <label for="gare" class="control-label">Gare de départ</label>
-                     <input type="text" placeholder="gare de départ" name="gare" class="form-control "/>
+                     <input type="text" placeholder="gare de départ" name="gareDepart" class="form-control "/>
                  </div>
 
                  <!-- Heure d'arrivée -->
                  <div class="form-group required">
                      <label class="control-label required">Heure d'arrivée</label>
-                     {% for arrivee in arrivees %}
+                     {% for arrivee in evenement.getArriveesGare() %}
                          <div class="radio">
-                             <label><input type="radio" name="arrivee" value="{{ arrivee.id }}" required="">{{ arrivee.heure }}</label>
+                             <label><input type="radio" name="arriveeGare" value="{{ arrivee.id }}" required="">{{ arrivee.heure }}</label>
                          </div>
                      {% endfor %}
              </div>
@@ -52,12 +54,12 @@
                  <!-- Ville de départ -->
                  <div class="form-group">
                      <label for="ville" class="control-label">Ville de départ</label>
-                     <input type="text" placeholder="ville de départ" name="ville" class="form-control "/>
+                     <input type="text" placeholder="ville de départ" name="villeDepart" class="form-control "/>
                  </div>
                  <!-- Places libres -->
                  <div class="form-group required">
                      <label for="place" class="control-label">Places libres</label>
-                     <select name="place" class="form-control">
+                     <select name="placeLibre" class="form-control">
                          <option value="0" selected>0</option>
                          <option value="1">1</option>
                          <option value="2">2</option>
@@ -77,10 +79,10 @@
              <div class="form-group required">
                  <label class="control-label required">Paiement</label>
                  <div class="radio">
-                     <label><input type="radio" name="paiement" value="virement">Virement</label>
+                     <label><input type="radio" name="paiement" value="{{ personne.getConstPaiementVirement() }}">Virement</label>
                  </div>
                  <div class="radio">
-                     <label><input type="radio" name="paiement" value="sur place">Sur place</label>
+                     <label><input type="radio" name="paiement" value="{{ personne.getConstPaiementSurPlace() }}">Sur place</label>
                  </div>
              </div>
 

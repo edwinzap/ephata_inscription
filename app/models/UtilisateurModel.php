@@ -34,4 +34,15 @@ class UtilisateurModel extends BaseModel
             return true;
         }
     }
+
+    public function getWhereEmail($email){
+       $query = 'SELECT id FROM utilisateur WHERE email=?';
+       $obj = parent::fetch($query, array($email));
+       return $obj->id;
+    }
+
+    public function get($id){
+        $t = parent::get('utilisateur', $id);
+        return $this->createObject($t);
+    }
 }

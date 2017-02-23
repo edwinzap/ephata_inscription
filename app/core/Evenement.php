@@ -14,17 +14,19 @@ use App\Models\SectionModel;
 class Evenement
 {
     private $libelle;
-    private $date_debut;
-    private $date_fin;
+    private $dateDebut;
+    private $dateFin;
     private $places = null;
     private $section;
-    private $arrivees_gare;
+    private $arriveesGare;
 
-
-    function __construct()
+    public function __construct($libelle=null, $dateDebut=null, $dateFin=null)
     {
-        $this->section= new SectionModel();
-        $this->arrivees_gare = [];
+        $this->libelle=$libelle;
+        $this->dateDebut=$dateDebut;
+        $this->dateFin=$dateFin;
+       // $this->section= new Section();
+       // $this->arriveesGare = [];
     }
 
     private $id = -1;
@@ -49,15 +51,15 @@ class Evenement
      */
     public function getArriveesGare()
     {
-        return $this->arrivees_gare;
+        return $this->arriveesGare;
     }
 
     /**
-     * @param array $arrivees_gare
+     * @param array $arriveesGare
      */
-    public function setArriveesGare($arrivees_gare)
+    public function setArriveesGare($arriveesGare)
     {
-        $this->arrivees_gare = $arrivees_gare;
+        $this->arriveesGare = $arriveesGare;
     }
 
     /**
@@ -97,15 +99,15 @@ class Evenement
      */
     public function getDateDebut()
     {
-        return $this->date_debut;
+        return $this->dateDebut;
     }
 
     /**
-     * @param mixed $date_debut
+     * @param mixed $dateDebut
      */
-    public function setDateDebut($date_debut)
+    public function setDateDebut($dateDebut)
     {
-        $this->date_debut = $date_debut;
+        $this->dateDebut = $dateDebut;
     }
 
     /**
@@ -113,15 +115,15 @@ class Evenement
      */
     public function getDateFin()
     {
-        return $this->date_fin;
+        return $this->dateFin;
     }
 
     /**
-     * @param mixed $date_fin
+     * @param mixed $dateFin
      */
-    public function setDateFin($date_fin)
+    public function setDateFin($dateFin)
     {
-        $this->date_fin = $date_fin;
+        $this->dateFin = $dateFin;
     }
 
     /**
@@ -140,5 +142,8 @@ class Evenement
         $this->places = $places;
     }
 
+    public function getDate(){
+        return $this->dateDebut .' - '. $this->dateFin;
+    }
 
 }

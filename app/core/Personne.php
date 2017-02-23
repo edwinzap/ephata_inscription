@@ -8,8 +8,12 @@ namespace App\Core;
  * Date: 16/02/2017
  * Time: 16:08
  */
+
+
+
 class Personne
 {
+
     private $id = -1;
     private $Nom;
     private $Prenom;
@@ -31,7 +35,7 @@ class Personne
      * @param $Telephone2
      * @param $Allergie
      */
-    public function __construct($Nom=null, $Prenom=null, $Naissance=null, $Sexe=null, $Telephone1=null, $Telephone2=null, $Allergie=null)
+    public function __construct($Nom=null, $Prenom=null,  $Sexe=null, $Naissance=null, $Telephone1=null, $Telephone2=null, $Allergie=null)
     {
         $this->Nom = $Nom;
         $this->Prenom = $Prenom;
@@ -41,7 +45,6 @@ class Personne
         $this->Telephone2 = $Telephone2;
         $this->Allergie = $Allergie;
     }
-
 
     /**
      * @return integer

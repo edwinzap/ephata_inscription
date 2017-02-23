@@ -10,10 +10,22 @@ namespace App\Models;
 
 
 use App\Core\Personne;
+use DateTime;
 
 class PersonneModel extends BaseModel
 {
+    private $adresseModel;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->adresseModel = new AdresseModel();
+    }
+
     public function insert(Personne $personne){
+        $idAdresse = $this->adresseModel->insert($personne->getAdresse());
+        $personne->getAdresse()->setId($idAdresse);
+
         $query = 'INSERT INTO personne(nom,prenom,sexe,naissance,telephone1,telephone2,allergie, id_adresse) VALUES(?,?,?,?,?,?,?,?)';
         parent::execute($query,$this->toArray($personne));
         $idPersonne = parent::lastInsertId();
@@ -37,19 +49,21 @@ class PersonneModel extends BaseModel
     }
 
     public function update(Personne $personne){
-        $query = 'UPDATE personne SET nom= ?,prenom=?,sexe=?,naissance=?,telephone1=?,telephone2=?,allergie=?, id_adresse=? WHERE id=? ';
+        $query = 'UPDATE personne SET nom= ?,prenom=?,sexe=?,naissance=STR_TO_DATE(?, \'%d/%m/%Y\'),telephone1=?,telephone2=?,allergie=?, id_adresse=? WHERE id=? ';
         $a = $this->toArray($personne);
         array_push($a,$personne->getId());
         parent::execute($query,$a);
     }
 
     /**Return all Personne where specific id_utilisateur
-     * @param $utilisateurId
+     * @param $idUtilisateur
      * @return array of Personne
      */
-    public function getAllWhereUtilisateur($utilisateurId){
-        $query = "SELECT * FROM personne WHERE id_utilisateur=?";
-        $result = parent::fetchAll($query,array($utilisateurId));
+    public function getAllWhereUtilisateur($idUtilisateur){
+        $query = "SELECT * FROM personne as p 
+                  INNER JOIN utilisateur_personne as up ON p.id= up.id_personne  
+                  WHERE up.id_utilisateur=?";
+        $result = parent::fetchAll($query,array($idUtilisateur));
         $list = [];
         foreach ($result as $item){
             array_push($list,$this->createObject($item));
@@ -70,7 +84,7 @@ class PersonneModel extends BaseModel
             $personne->getNom(),
             $personne->getPrenom(),
             $personne->getSexe(),
-            $personne->getNaissance(),
+            DateTime::createFromFormat('d/m/Y',$personne->getNaissance())->format('Y-m-d'), //Convertit la date en format compréhensible par la DataBase
             $personne->getTelephone1(),
             $personne->getTelephone2(),
             $personne->getAllergie(),
@@ -83,12 +97,12 @@ class PersonneModel extends BaseModel
         $personne->setId($obj->id);
         $personne->setNom($obj->nom);
         $personne->setPrenom($obj->prenom);
-        $personne->setSexe($obj->Sexe);
+        $personne->setSexe($obj->sexe);
         $personne->setNaissance($obj->naissance);
-        $personne->setTelephone1($obj->Telephone1);
-        $personne->setTelephone2($obj->Telephone2);
-        $personne->setAllergie($obj->Allergie);
-        $personne->setUtilisateurId($obj->UtilisateurId);
+        $personne->setTelephone1($obj->telephone1);
+        $personne->setTelephone2($obj->telephone2);
+        $personne->setAllergie($obj->allergie);
+        $personne->setAdresse($this->adresseModel->get($obj->id_adresse));
         return $personne;
     }
 

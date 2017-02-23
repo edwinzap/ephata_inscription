@@ -8,18 +8,15 @@
 
 namespace App\Controllers;
 
+use App\Core\Adresse;
+use App\Core\Personne;
+use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
 
 class PersonneController extends BaseController
 {
-    private function insert(Personne $personne){
-        $idAdresse = $this->adresse()->insert($personne->getAdresse());
-        $personne->getAdresse()->setId($idAdresse);
-        $this->personne()->insert($personne);
-    }
-
     //region FormPersonne
     public function getFormPersonne(RequestInterface $request, ResponseInterface $response){
-
         $this->render($response, 'pages/formPersonne.twig',
             array('title'=>'Nouvel Ephatien')
         );
@@ -31,9 +28,9 @@ class PersonneController extends BaseController
         $adresse = new Adresse($p['rue'], $p['numero'], $p['boite'], $p['codePostal'], $p['ville'], $p['pays']);
         $personne = new Personne($p['nom'], $p['prenom'], $p['sexe'], $p['naissance'], $p['telephone1'], $p['telephone2'], $p['allergie']);
         $personne->setAdresse($adresse);
-        $personne->setUtilisateurId(1);
+        $personne->setUtilisateurId($_SESSION['idUtilisateur']);
 
-        $this->insert($personne);
+        $this->personne()->insert($personne);
 
         if (true){
             return $this->redirect($response, 'account');

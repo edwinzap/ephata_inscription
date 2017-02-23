@@ -27,7 +27,7 @@ abstract class BaseModel {
         catch(\Exception $ex){
             echo 'Erreur ! Impossible de se connecter à la base de données';
             die();
-        }
+    }
     }
 
 
@@ -37,7 +37,6 @@ abstract class BaseModel {
      */
     protected function execute($query, array $params =[] ){
         $stmt = $this->pdo->prepare($query);
-
         foreach ($params as $key=>&$val){
             $stmt->bindParam($key+1,$val);
         }
@@ -81,8 +80,8 @@ abstract class BaseModel {
     }
 
     protected function exist($table, $id){
-        $query = 'SELECT COUNT(*) as count FROM ? WHERE id=?';
-        $t = $this->fetch($query, array($table, $id));
+        $query = 'SELECT COUNT(*) as count FROM ' .$table.' WHERE id= ?';
+        $t = $this->fetch($query, array($id));
         if ($t->count == 0){
             return false;
         }
@@ -92,12 +91,12 @@ abstract class BaseModel {
     }
 
     public function delete($table, $id){
-        $query = 'UPDATE ? SET deleted=1 WHERE id=?';
-        $this->execute($query, array($table, $id));
+        $query = 'UPDATE ' .$table. ' SET deleted=1 WHERE id=?';
+        $this->execute($query, array($id));
     }
 
     public function get($table, $id){
-        $query = 'SELECT * FROM ? WHERE id=?';
-        return $this->fetch($query,array($table,$id));
+        $query = 'SELECT * FROM ' .$table. ' WHERE id= ?';
+        return $this->fetch($query, array($id));
     }
 }

@@ -10,9 +10,20 @@ namespace App\Models;
 
 
 use App\Core\Evenement;
+use App\Models\SectionModel;
+
 
 class EvenementModel extends BaseModel
 {
+    private $sectionModel;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->sectionModel = new SectionModel();
+        $this->arriveeModel = new ArriveeModel();
+    }
+
 
     /**Get Evenement by his Id
      * @param $id
@@ -57,12 +68,14 @@ class EvenementModel extends BaseModel
      * @return Evenement
      */
     private function createObject($obj){
+
         $evenement = new Evenement();
         $evenement->setId($obj->id);
         $evenement->setDateDebut($obj->date_debut);
         $evenement->setDateFin($obj->date_fin);
         $evenement->setPlaces($obj->places);
-
+        $evenement->setSection($this->sectionModel->get($obj->id_section));
+        $evenement->setArriveesGare($this->arriveeModel->getAllWhereEvenement($obj->id));
         return $evenement;
     }
 

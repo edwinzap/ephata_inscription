@@ -6,10 +6,14 @@
  * composer require slim/twig-view
  */
 
+
 use App\Controllers\PagesController;
 use App\Controllers\PersonneController;
 use App\Models\Utilisateurs;
+
+
 require '../vendor/autoload.php';
+session_start();
 
 $app = new \Slim\App([
     'settings'=>[
@@ -17,13 +21,7 @@ $app = new \Slim\App([
     ]
 ]);
 
-require('../app/container.php');
+require('../app/src/container.php');
+require('../app/src/router.php');
 
-$app->get('/', PagesController::class . ':getLogin') ->setName('login');
-$app->post('/', PagesController::class . ':postLogin');
-$app->get('/account', PagesController::class . ':account') ->setName('account');
-$app->get('/formPersonne', PersonneController::class . ':getFormPersonne')->setName('formPersonne');
-$app->post('/formPersonne', PersonneController::class . ':postFormPersonne');
-$app->get('/formInscription/{id}', PagesController::class . ':getFormInscription') ->setName('formInscription');
-$app->post('/formInscription', PagesController::class . ':postFormInscription');
 $app->run();

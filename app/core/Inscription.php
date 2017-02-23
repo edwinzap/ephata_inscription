@@ -11,17 +11,68 @@ namespace App\Core;
 
 class Inscription
 {
-    private $personne;
-    private $evenement;
-    private $commentaire;
-    private $paiement;
-    private $transport;
-    private $ville_depart;
-    private $place_libre;
-    private $gare_depart;
-    private $arrivee_gare;
+
+    const TRANSPORT_TRAIN = 0;
+    const TRANSPORT_VOITURE = 1;
+    const TRANSPORT_AUTRE = 2;
+
+    const PAIEMENT_VIREMENT = 0;
+    const PAIEMENT_SURPLACE = 1;
 
     private $id = -1;
+    private $transport;
+    private $paiement;
+    private $gareDepart;
+    private $arriveeGare;
+    private $villeDepart;
+    private $placeLibre;
+    private $commentaire;
+    private $personne;
+    private $evenement;
+
+    /**
+     * Inscription constructor.
+     * @param $transport
+     * @param $paiement
+     * @param $gare_depart
+     * @param $arrivee_gare
+     * @param $ville_depart
+     * @param $place_libre
+     * @param $commentaire
+     * @param $personne
+     * @param $evenement
+     */
+    public function __construct($transport=null, $paiement=null, $commentaire=null, $personne=null,$evenement=null,
+                                $gare_depart=null, $arrivee_gare=null, $ville_depart=null, $place_libre=null)
+    {
+        $this->transport = $transport;
+        $this->paiement = $paiement;
+        $this->gareDepart = $gare_depart;
+        $this->arriveeGare = $arrivee_gare;
+        $this->villeDepart = $ville_depart;
+        $this->placeLibre = $place_libre;
+        $this->commentaire = $commentaire;
+        $this->personne = $personne;
+        $this->evenement = $evenement;
+    }
+
+    public static function getConstTransportTrain(){
+        return self::TRANSPORT_TRAIN;
+    }
+    public static function getConstTransportVoiture(){
+        return self::TRANSPORT_VOITURE;
+    }
+    public static function getConstTransportAutre(){
+        return self::TRANSPORT_AUTRE;
+    }
+
+    public static function getConstPaiementVirement(){
+        return self::PAIEMENT_VIREMENT;
+    }
+    public static function getConstPaiementSurPlace(){
+        return self::PAIEMENT_SURPLACE;
+    }
+
     /**
      * @return integer
      */
@@ -123,15 +174,15 @@ class Inscription
      */
     public function getVilleDepart()
     {
-        return $this->ville_depart;
+        return $this->villeDepart;
     }
 
     /**
-     * @param mixed $ville_depart
+     * @param mixed $villeDepart
      */
-    public function setVilleDepart($ville_depart)
+    public function setVilleDepart($villeDepart)
     {
-        $this->ville_depart = $ville_depart;
+        $this->villeDepart = $villeDepart;
     }
 
     /**
@@ -139,15 +190,15 @@ class Inscription
      */
     public function getPlaceLibre()
     {
-        return $this->place_libre;
+        return $this->placeLibre;
     }
 
     /**
-     * @param mixed $place_libre
+     * @param mixed $placeLibre
      */
-    public function setPlaceLibre($place_libre)
+    public function setPlaceLibre($placeLibre)
     {
-        $this->place_libre = $place_libre;
+        $this->placeLibre = $placeLibre;
     }
 
     /**
@@ -155,15 +206,15 @@ class Inscription
      */
     public function getGareDepart()
     {
-        return $this->gare_depart;
+        return $this->gareDepart;
     }
 
     /**
-     * @param mixed $gare_depart
+     * @param mixed $gareDepart
      */
-    public function setGareDepart($gare_depart)
+    public function setGareDepart($gareDepart)
     {
-        $this->gare_depart = $gare_depart;
+        $this->gareDepart = $gareDepart;
     }
 
     /**
@@ -171,16 +222,17 @@ class Inscription
      */
     public function getArriveeGare()
     {
-        return $this->arrivee_gare;
+        return $this->arriveeGare;
     }
 
     /**
-     * @param mixed $arrivee_gare
+     * @param mixed $arriveeGare
      */
-    public function setArriveeGare($arrivee_gare)
+    public function setArriveeGare($arriveeGare)
     {
-        $this->arrivee_gare = $arrivee_gare;
+        $this->arriveeGare = $arriveeGare;
     }
+
 
 
 }
